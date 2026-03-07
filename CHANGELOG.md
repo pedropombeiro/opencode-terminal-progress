@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.2](https://github.com/pedropombeiro/opencode-terminal-progress/compare/opencode-terminal-progress-v0.2.1...opencode-terminal-progress-v0.2.2) (2026-03-07)
+
+
+### Bug Fixes
+
+* write OSC sequences to stderr to avoid polluting captured stdout ([#3](https://github.com/pedropombeiro/opencode-terminal-progress/issues/3)) ([343fed9](https://github.com/pedropombeiro/opencode-terminal-progress/commit/343fed9fd5844f29027662d96a9d3e6cfcb4b5dc))
+
 ## [0.2.1](https://github.com/pedropombeiro/opencode-terminal-progress/compare/opencode-terminal-progress-v0.2.0...opencode-terminal-progress-v0.2.1) (2026-03-07)
 
 
