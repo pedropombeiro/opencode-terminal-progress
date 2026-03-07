@@ -24,7 +24,7 @@ function createOsc(): (payload: string) => void {
   const inTmux = !!process.env['TMUX'];
   return (payload: string) => {
     const esc = inTmux ? `\x1bPtmux;\x1b\x1b]${payload}\x07\x1b\\` : `\x1b]${payload}\x07`;
-    process.stdout.write(esc);
+    process.stderr.write(esc);
   };
 }
 
