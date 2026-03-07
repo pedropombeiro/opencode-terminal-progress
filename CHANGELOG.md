@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.1](https://github.com/pedropombeiro/opencode-terminal-progress/compare/opencode-terminal-progress-v0.3.0...opencode-terminal-progress-v0.3.1) (2026-03-07)
+
+
+### Bug Fixes
+
+* deduplicate tool events to prevent progress bar bouncing ([2fd71be](https://github.com/pedropombeiro/opencode-terminal-progress/commit/2fd71be70a14de12e7ea2512629511507a8fbd9a))
+
 ## [0.3.0](https://github.com/pedropombeiro/opencode-terminal-progress/compare/opencode-terminal-progress-v0.2.2...opencode-terminal-progress-v0.3.0) (2026-03-07)
 
 
