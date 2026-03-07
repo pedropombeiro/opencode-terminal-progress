@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.0](https://github.com/pedropombeiro/opencode-terminal-progress/compare/opencode-terminal-progress-v0.2.2...opencode-terminal-progress-v0.3.0) (2026-03-07)
+
+
+### Features
+
+* show determinate progress based on tool completion tracking ([77f9167](https://github.com/pedropombeiro/opencode-terminal-progress/commit/77f9167da34b053ed6028c0a61b71853f6a05707))
+
 ## [0.2.2](https://github.com/pedropombeiro/opencode-terminal-progress/compare/opencode-terminal-progress-v0.2.1...opencode-terminal-progress-v0.2.2) (2026-03-07)
 
 
