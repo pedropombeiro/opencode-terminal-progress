@@ -20,40 +20,73 @@ function detectTerminal(): Terminal | undefined {
   return undefined;
 }
 
-function osc(payload: string): void {
-  const esc = process.env['TMUX']
-    ? `\x1bPtmux;\x1b\x1b]${payload}\x07\x1b\\`
-    : `\x1b]${payload}\x07`;
-  process.stdout.write(esc);
-}
-
-function progress(code: string): void {
-  osc(`9;4;${code}`);
+function createOsc(): (payload: string) => void {
+  const inTmux = !!process.env['TMUX'];
+  return (payload: string) => {
+    const esc = inTmux ? `\x1bPtmux;\x1b\x1b]${payload}\x07\x1b\\` : `\x1b]${payload}\x07`;
+    process.stdout.write(esc);
+  };
 }
 
 export const TerminalProgressPlugin: Plugin = async () => {
-  const terminal = detectTerminal();
-  if (!terminal) return {};
+  if (!detectTerminal()) return {};
+
+  const osc = createOsc();
+
+  let waitingForInput = false;
+
+  function progress(code: string): void {
+    osc(`9;4;${code}`);
+  }
+
+  function pause(): void {
+    waitingForInput = true;
+    progress('4;50');
+  }
+
+  function resume(): void {
+    waitingForInput = false;
+  }
 
   return {
     event: async ({ event }) => {
-      if (event.type === 'session.status') {
-        const { status } = event.properties;
-        if (status.type === 'busy') {
-          progress('3');
-        } else if (status.type === 'idle') {
-          progress('0');
+      switch (event.type as string) {
+        case 'session.status': {
+          const { status } = event.properties as { status: { type: string } };
+          switch (status.type) {
+            case 'busy':
+              if (!waitingForInput) progress('3');
+              break;
+            case 'idle':
+              resume();
+              progress('0');
+              break;
+          }
+          break;
         }
-      } else if (event.type === 'session.error') {
-        progress('2');
+        case 'session.idle':
+          resume();
+          progress('0');
+          break;
+        case 'session.error':
+          resume();
+          progress('2');
+          break;
+        case 'permission.asked':
+          pause();
+          break;
+        case 'permission.replied':
+          resume();
+          progress('3');
+          break;
       }
     },
     'permission.ask': async () => {
-      progress('4;50');
+      pause();
     },
     'tool.execute.before': async (input) => {
       if (input.tool === 'question') {
-        progress('4;50');
+        pause();
       }
     },
   };
