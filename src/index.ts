@@ -29,17 +29,17 @@ function createOsc(): (payload: string) => void {
   };
 }
 
-interface ToolStats {
-  total: number;
-  done: number;
+interface ToolTracker {
+  known: Set<string>;
+  done: Set<string>;
 }
 
-function toolProgress(messages: Map<string, ToolStats>): number | undefined {
+function toolProgress(messages: Map<string, ToolTracker>): number | undefined {
   let total = 0;
   let done = 0;
-  for (const stats of messages.values()) {
-    total += stats.total;
-    done += stats.done;
+  for (const tracker of messages.values()) {
+    total += tracker.known.size;
+    done += tracker.done.size;
   }
   if (total === 0) return undefined;
   return Math.min(Math.round((done / total) * 100), 99);
@@ -52,7 +52,7 @@ export const TerminalProgressPlugin: Plugin = async () => {
 
   let waitingForInput = false;
   let busy = false;
-  const tools = new Map<string, ToolStats>();
+  const tools = new Map<string, ToolTracker>();
 
   function progress(code: string): void {
     osc(`9;4;${code}`);
@@ -118,18 +118,22 @@ export const TerminalProgressPlugin: Plugin = async () => {
 
           if (part.type === 'tool') {
             const tp = part as ToolPart;
-            const key = tp.messageID;
-            const stats = tools.get(key) ?? { total: 0, done: 0 };
+            const tracker = tools.get(tp.messageID) ?? {
+              known: new Set<string>(),
+              done: new Set<string>(),
+            };
 
-            if (tp.state.status === 'pending' || tp.state.status === 'running') {
-              if (tp.state.status === 'pending') {
-                stats.total++;
-              }
-            } else {
-              stats.done++;
+            tracker.known.add(tp.callID);
+            if (tp.state.status === 'completed' || tp.state.status === 'error') {
+              tracker.done.add(tp.callID);
             }
 
-            tools.set(key, stats);
+            if (tracker.done.size === tracker.known.size) {
+              tools.delete(tp.messageID);
+            } else {
+              tools.set(tp.messageID, tracker);
+            }
+
             if (busy) showBusy();
           }
           break;
