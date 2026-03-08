@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.0](https://github.com/pedropombeiro/opencode-terminal-progress/compare/opencode-terminal-progress-v0.3.1...opencode-terminal-progress-v0.4.0) (2026-03-08)
+
+
+### Features
+
+* add OPENCODE_TERMINAL_PROGRESS env var to disable progress bar ([#7](https://github.com/pedropombeiro/opencode-terminal-progress/issues/7)) ([95e8a76](https://github.com/pedropombeiro/opencode-terminal-progress/commit/95e8a767b974e863a8f6ac7f439ac6ae7b978fb2))
+
 ## [0.3.1](https://github.com/pedropombeiro/opencode-terminal-progress/compare/opencode-terminal-progress-v0.3.0...opencode-terminal-progress-v0.3.1) (2026-03-07)
 
 
