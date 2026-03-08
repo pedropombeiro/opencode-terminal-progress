@@ -46,6 +46,8 @@ function toolProgress(messages: Map<string, ToolTracker>): number | undefined {
 }
 
 export const TerminalProgressPlugin: Plugin = async () => {
+  const progressEnv = process.env['OPENCODE_TERMINAL_PROGRESS'];
+  if (progressEnv && /^(0|false|no)$/i.test(progressEnv)) return {};
   if (!detectTerminal()) return {};
 
   const osc = createOsc();
