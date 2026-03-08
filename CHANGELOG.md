@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.2](https://github.com/pedropombeiro/opencode-terminal-progress/compare/opencode-terminal-progress-v0.4.1...opencode-terminal-progress-v0.4.2) (2026-03-08)
+
+
+### Reverts
+
+* replace determinate progress with indeterminate spinner ([81bfd89](https://github.com/pedropombeiro/opencode-terminal-progress/commit/81bfd899fad64e6c54d9bb8f92647a27e1f4cf43))
+
 ## [0.4.1](https://github.com/pedropombeiro/opencode-terminal-progress/compare/opencode-terminal-progress-v0.4.0...opencode-terminal-progress-v0.4.1) (2026-03-08)
 
 
