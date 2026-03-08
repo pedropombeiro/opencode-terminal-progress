@@ -1,3 +1,4 @@
+import { openSync, writeSync } from 'fs';
 import type { Plugin } from '@opencode-ai/plugin';
 import type { EventMessagePartUpdated, EventSessionStatus, ToolPart } from '@opencode-ai/sdk';
 
@@ -21,11 +22,17 @@ function detectTerminal(): Terminal | undefined {
   return undefined;
 }
 
-function createOsc(): (payload: string) => void {
+function createOsc(): ((payload: string) => void) | undefined {
   const inTmux = !!process.env['TMUX'];
+  let fd: number;
+  try {
+    fd = openSync('/dev/tty', 'w');
+  } catch {
+    return undefined;
+  }
   return (payload: string) => {
     const esc = inTmux ? `\x1bPtmux;\x1b\x1b]${payload}\x07\x1b\\` : `\x1b]${payload}\x07`;
-    process.stderr.write(esc);
+    writeSync(fd, esc);
   };
 }
 
@@ -50,7 +57,9 @@ export const TerminalProgressPlugin: Plugin = async () => {
   if (progressEnv && /^(0|false|no)$/i.test(progressEnv)) return {};
   if (!detectTerminal()) return {};
 
-  const osc = createOsc();
+  const maybeOsc = createOsc();
+  if (!maybeOsc) return {};
+  const osc = maybeOsc;
 
   let waitingForInput = false;
   let busy = false;
