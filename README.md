@@ -5,23 +5,25 @@ An [OpenCode](https://opencode.ai) plugin that shows agent progress in your term
 
 ## Supported terminals
 
-| Terminal                                                  | Detection                                               |
-| --------------------------------------------------------- | ------------------------------------------------------- |
+| Terminal                                                  | Detection                                                   |
+| --------------------------------------------------------- | ----------------------------------------------------------- |
 | [iTerm2](https://iterm2.com)                              | `TERM_PROGRAM=iTerm.app`, `LC_TERMINAL`, `ITERM_SESSION_ID` |
-| [WezTerm](https://wezfurlong.org/wezterm/)                | `TERM_PROGRAM=WezTerm`, `WEZTERM_EXECUTABLE`            |
-| [Windows Terminal](https://github.com/microsoft/terminal) | `WT_SESSION`                                            |
+| [WezTerm](https://wezfurlong.org/wezterm/)                | `TERM_PROGRAM=WezTerm`, `WEZTERM_EXECUTABLE`                |
+| [Windows Terminal](https://github.com/microsoft/terminal) | `WT_SESSION`                                                |
 
 The plugin automatically detects which terminal is in use and becomes a no-op if none of the above
 are found. tmux passthrough is handled transparently when `$TMUX` is set.
 
+Set `OPENCODE_TERMINAL_PROGRESS=0` (or `false`/`no`) to disable progress reporting.
+
 ## Progress states
 
-| Agent state         | Progress indicator |
-| ------------------- | ------------------ |
-| Busy                | Indeterminate      |
-| Idle                | Cleared            |
-| Error               | Error (red)        |
-| Waiting for input   | Paused at 50%      |
+| Agent state       | Progress indicator |
+| ----------------- | ------------------ |
+| Busy              | Indeterminate      |
+| Idle              | Cleared            |
+| Error             | Error (red)        |
+| Waiting for input | Paused at 50%      |
 
 ## Installation
 
