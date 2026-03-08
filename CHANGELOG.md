@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.1](https://github.com/pedropombeiro/opencode-terminal-progress/compare/opencode-terminal-progress-v0.4.0...opencode-terminal-progress-v0.4.1) (2026-03-08)
+
+
+### Bug Fixes
+
+* write OSC sequences to /dev/tty instead of stderr ([#9](https://github.com/pedropombeiro/opencode-terminal-progress/issues/9)) ([e29b640](https://github.com/pedropombeiro/opencode-terminal-progress/commit/e29b640a98670db000b3968aaa86b01ee44465d1))
+
 ## [0.4.0](https://github.com/pedropombeiro/opencode-terminal-progress/compare/opencode-terminal-progress-v0.3.1...opencode-terminal-progress-v0.4.0) (2026-03-08)
 
 
